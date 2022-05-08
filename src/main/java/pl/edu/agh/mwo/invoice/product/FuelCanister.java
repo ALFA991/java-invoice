@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FuelCanister extends Product {
-    private final static BigDecimal akcyza = BigDecimal.valueOf(5.56);
+    private final  BigDecimal akcyza = BigDecimal.valueOf(5.56);
     private static java.time.format.DateTimeFormatter DateTimeFormatter;
     public String currDateformat(){
         LocalDateTime currentDateTime = LocalDateTime.now();

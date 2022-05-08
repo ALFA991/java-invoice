@@ -11,13 +11,16 @@ public class Invoice {
     static int nextNumber = 1;
     private Map<Product, Integer> products = new HashMap<Product, Integer>();
 
-    public Invoice () {this.number = nextNumber++;}
+    public Invoice() {
+        this.number = nextNumber++;
+    }
 
     public void addProduct(Product product) {
         addProduct(product, 1);
     }
 
     public void addProduct(Product product, Integer quantity) {
+
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
@@ -49,12 +52,15 @@ public class Invoice {
         String lista;
         lista = invoiceHeader + this.number + ": \n";
         for (Product product : products.keySet()){
-            lista += product.getName() + " " + products.get(product) + " " + product.getPrice() + "\n";
+            lista += product.getName() + " "
+                    + products.get(product) + " " + product.getPrice() + "\n";
         }
         lista += "\nLiczba produktów na fakturze to: " + products.size();
 
         return lista;
+
     }
+
     public Map<Product, Integer> getProducts() {
         return this.products;
     }

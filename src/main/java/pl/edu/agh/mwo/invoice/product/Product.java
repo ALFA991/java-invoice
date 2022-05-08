@@ -45,7 +45,7 @@ public abstract class Product {
         }
         Product product = (Product) o;
         return Objects.equals(name, product.name) && Objects.equals(price, product.price)
-        && Objects.equals(taxPercent, product.taxPercent);
+            && Objects.equals(taxPercent, product.taxPercent);
     }
     @Override
     public int hashCode() {
