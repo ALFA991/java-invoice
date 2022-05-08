@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -8,13 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pl.edu.agh.mwo.invoice.Invoice;
-import pl.edu.agh.mwo.invoice.product.DairyProduct;
-import pl.edu.agh.mwo.invoice.product.OtherProduct;
-import pl.edu.agh.mwo.invoice.product.Product;
-import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+import pl.edu.agh.mwo.invoice.product.*;
 
 public class InvoiceTest {
     private Invoice invoice;
+
 
     @Before
     public void createEmptyInvoiceForTheTest() {
@@ -125,4 +124,52 @@ public class InvoiceTest {
     public void testAddingNullProduct() {
         invoice.addProduct(null);
     }
+
+    @Test
+    public void testInvoiceHasNumber() { invoice.getNumber();}
+
+    @Test
+    public void testTwoInvoiceHasDifferentNumber() {
+        int n1 = invoice.getNumber();
+        Invoice invoice2 = new Invoice();
+        int n2 = invoice2.getNumber();
+        Assert.assertNotEquals(n1,n2);
+
+    }
+    @Test
+    public void testprintProductsList() {
+        Product product = new DairyProduct("masło", BigDecimal.valueOf(5.30));
+        invoice.addProduct(product);
+        Assert.assertEquals("INV/1: \nmasło 1 5.3\n\nLiczba produktów na fakturze to: 1",invoice.getProductList());
+
+    }
+    @Test
+    public void testIncreasingNumbersOfTheSameProducts() {
+        Product product = new DairyProduct("masło", BigDecimal.valueOf(5.30));
+        Product product2 = new DairyProduct("masło", BigDecimal.valueOf(5.30));
+        invoice.addProduct(product);
+        invoice.addProduct(product2);
+        Assert.assertEquals(1,invoice.getProducts().size());
+    }
+    @Test
+    public void testPriceWithAkcyzaPaliwo() {
+        Product product = new FuelCanister("paliwo", BigDecimal.valueOf(10));
+        Assert.assertEquals(BigDecimal.valueOf(17.86),product.getPriceWithTax());
+    }
+    @Test
+    public void testPriceWithAkcyzaWino() {
+        Product product = new FuelCanister("wino", BigDecimal.valueOf(10));
+        Assert.assertEquals(BigDecimal.valueOf(17.86),product.getPriceWithTax());
+
+
+    }
+    @Test
+    public void testBrakAkcyzyDzienDrwala() {
+        Product product = new FuelCanister("paliwo", BigDecimal.valueOf(10));
+        Assert.assertEquals(BigDecimal.valueOf(10),product.getPriceWithTax());
+
+
+    }
+
+
 }

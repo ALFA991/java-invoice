@@ -6,7 +6,12 @@ import java.util.Map;
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
+    private static String invoiceHeader = "INV/";
+    private int number;
+    static int nextNumber = 1;
     private Map<Product, Integer> products = new HashMap<Product, Integer>();
+
+    public Invoice () {this.number = nextNumber++;}
 
     public void addProduct(Product product) {
         addProduct(product, 1);
@@ -16,7 +21,7 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        products.put(product, quantity);
+        products.put(product, products.getOrDefault(product,0) + quantity);
     }
 
     public BigDecimal getNetTotal() {
@@ -39,5 +44,23 @@ public class Invoice {
             totalGross = totalGross.add(product.getPriceWithTax().multiply(quantity));
         }
         return totalGross;
+    }
+    public String getProductList(){
+        String lista;
+        lista = invoiceHeader + this.number + ": \n";
+        for (Product product : products.keySet()){
+            lista += product.getName() + " " + products.get(product) + " " + product.getPrice() + "\n";
+        }
+        lista += "\nLiczba produktów na fakturze to: " + products.size();
+
+        return lista;
+    }
+    public Map<Product, Integer> getProducts() {
+        return this.products;
+    }
+
+
+    public int getNumber() {
+        return number;
     }
 }
