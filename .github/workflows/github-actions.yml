@@ -17,3 +17,5 @@ jobs:
           distribution: 'adopt'
       - name: Test
         run: mvn test
+      - name: Checkstyle
+        run: mvn checkstyle::check
