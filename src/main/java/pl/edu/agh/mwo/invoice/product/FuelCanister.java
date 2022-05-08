@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class FuelCanister extends Product {
     private final static BigDecimal akcyza = BigDecimal.valueOf(5.56);
     private static java.time.format.DateTimeFormatter DateTimeFormatter;
-    public String format(){
+    public String currDateformat(){
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDateTime = currentDateTime.format(dateTimeFormatter);
@@ -21,7 +21,7 @@ public class FuelCanister extends Product {
     @Override
     public BigDecimal getPriceWithTax() {
         BigDecimal priceWithTaxAndAkcyza = price;
-        String date = format();
+        String date = currDateformat();
         if (date.contains("05-08")) {
             return priceWithTaxAndAkcyza = price;
         }else {

@@ -1,7 +1,6 @@
 package pl.edu.agh.mwo.invoice.product;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class BottleOfWine extends Product {
     private final static BigDecimal akcyza = BigDecimal.valueOf(5.56);

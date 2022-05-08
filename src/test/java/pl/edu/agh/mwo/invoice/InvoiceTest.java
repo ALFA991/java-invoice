@@ -134,7 +134,6 @@ public class InvoiceTest {
         Invoice invoice2 = new Invoice();
         int n2 = invoice2.getNumber();
         Assert.assertNotEquals(n1,n2);
-
     }
     @Test
     public void testprintProductsList() {
@@ -153,23 +152,28 @@ public class InvoiceTest {
     }
     @Test
     public void testPriceWithAkcyzaPaliwo() {
-        Product product = new FuelCanister("paliwo", BigDecimal.valueOf(10));
-        Assert.assertEquals(BigDecimal.valueOf(17.86),product.getPriceWithTax());
+        FuelCanister product = new FuelCanister("paliwo", BigDecimal.valueOf(10));
+        String date = product.currDateformat();
+        if (date.contains("05-08")) {
+            Assert.assertEquals(BigDecimal.valueOf(10),product.getPriceWithTax());
+        }else {
+            Assert.assertEquals(BigDecimal.valueOf(17.86),product.getPriceWithTax());
+        }
     }
     @Test
     public void testPriceWithAkcyzaWino() {
-        Product product = new FuelCanister("wino", BigDecimal.valueOf(10));
+        Product product = new BottleOfWine("wino", BigDecimal.valueOf(10));
         Assert.assertEquals(BigDecimal.valueOf(17.86),product.getPriceWithTax());
-
-
     }
     @Test
     public void testBrakAkcyzyDzienDrwala() {
-        Product product = new FuelCanister("paliwo", BigDecimal.valueOf(10));
-        Assert.assertEquals(BigDecimal.valueOf(10),product.getPriceWithTax());
-
+        FuelCanister product = new FuelCanister("paliwo", BigDecimal.valueOf(10));
+        String date = product.currDateformat();
+        if (date.contains("05-08")) {
+            Assert.assertEquals(BigDecimal.valueOf(10),product.getPriceWithTax());
+        }else {
+            Assert.assertEquals(BigDecimal.valueOf(17.86),product.getPriceWithTax());
+        }
 
     }
-
-
 }
