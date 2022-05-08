@@ -1,18 +1,21 @@
+---
 name: CI for Java Invoice
 on: [push]
 jobs:
   test:
-    name: Unit tests
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.platform }}
+        javaversion: [8, 13, 15, 18, 19]
+    name: Unit tests
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '18'
+          java-version: ${{ matrix.javaversion }}
           distribution: 'adopt'
-     - name: Test
-       run: mvn test
+      - name: Test
+        run: mvn test
+      - name: Checkstyle
+        run: mvn checkstyle:check
