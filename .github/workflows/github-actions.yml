@@ -2,6 +2,7 @@ name: CI for Java Invoice
 on: [push]
 jobs:
   test:
+     name: Unit test
      runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
